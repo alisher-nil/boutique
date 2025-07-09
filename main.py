@@ -7,7 +7,6 @@ from google import genai
 load_dotenv()
 
 api_key: str | None = os.environ.get("GEMINI_API_KEY")
-# model_name = "gemini-2.0-flash"
 model_name = "gemini-2.0-flash-001"
 client = genai.Client(api_key=api_key)
 
@@ -22,6 +21,8 @@ def main(prompt: str):
 
 
 if __name__ == "__main__":
-    args = sys.argv
-    print(args)
-    # main()
+    if len(sys.argv) != 2:
+        print("Usage: uv run main.py 'prompt text'")
+        sys.exit(1)
+    else:
+        main(sys.argv[1])
