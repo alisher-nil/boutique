@@ -1,13 +1,16 @@
 from functions.config import MAX_CHARS
 from functions.exceptions import OutsideWorkDirException
-from functions.utils import validate_exsisting_file_path
+from functions.utils import verify_filepath_is_valid_and_exists
 
 
 def get_file_content(working_directory: str, file_path: str) -> str:
     error_template = "Error: {error}"
     error_message = ""
     try:
-        absolute_filepath = validate_exsisting_file_path(working_directory, file_path)
+        absolute_filepath = verify_filepath_is_valid_and_exists(
+            working_directory,
+            file_path,
+        )
         with open(absolute_filepath, "r") as f:
             file_content = f.read(MAX_CHARS)
             # checking is there's anything after the limit:

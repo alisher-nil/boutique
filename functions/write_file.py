@@ -1,18 +1,15 @@
-import os
-
 from functions.exceptions import OutsideWorkDirException
-from functions.utils import validate_new_file_path
+from functions.utils import ensure_directory_exists, verify_filepath_is_valid
 
 
 def write_file(working_directory: str, file_path: str, content: str):
     error_template = "Error: {error}"
     error_message = ""
     try:
-        absolute_filepath = validate_new_file_path(working_directory, file_path)
-        dir_path = os.path.dirname(absolute_filepath)
-        os.makedirs(dir_path, exist_ok=True)
-        with open(absolute_filepath, "w") as f:
-            f.write(content)
+        full_file_path = verify_filepath_is_valid(working_directory, file_path)
+        ensure_directory_exists(full_file_path)
+        with open(full_file_path, "w") as output_file:
+            output_file.write(content)
 
     except OutsideWorkDirException:
         error_message = (
