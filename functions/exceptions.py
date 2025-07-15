@@ -1,0 +1,2 @@
+class OutsideWorkDirException(Exception):
+    pass
