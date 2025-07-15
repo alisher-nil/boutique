@@ -1,6 +1,6 @@
 import os
 
-from functions.exceptions import OutsideWorkDirException
+from functions.exceptions import NotAPythonFile, OutsideWorkDirException
 
 
 def verify_filepath_is_valid_and_exists(working_directory: str, file_path: str) -> str:
@@ -45,3 +45,8 @@ def validate_directory(working_directory: str, directory: str | None) -> str:
         raise ValueError(f'"{os.path.basename(directory)}" is not a directory')
 
     return absolute_directory_path
+
+
+def check_if_python_file(file_path: str) -> None:
+    if not file_path.endswith(".py"):
+        raise NotAPythonFile

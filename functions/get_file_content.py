@@ -1,10 +1,10 @@
+from functions.common import ERROR_TEMPLATE
 from functions.config import MAX_CHARS
 from functions.exceptions import OutsideWorkDirException
 from functions.utils import verify_filepath_is_valid_and_exists
 
 
 def get_file_content(working_directory: str, file_path: str) -> str:
-    error_template = "Error: {error}"
     error_message = ""
     try:
         absolute_filepath = verify_filepath_is_valid_and_exists(
@@ -31,6 +31,6 @@ def get_file_content(working_directory: str, file_path: str) -> str:
         error_message = str(e)
     finally:
         if error_message:
-            return error_template.format(error=error_message)
+            return ERROR_TEMPLATE.format(error=error_message)
 
     return file_content
