@@ -2,7 +2,6 @@ import os
 from functools import partial
 
 from functions.config import FILE_INFO_TEMPLATE, MAX_CHARS
-from functions.exceptions import NotAPythonFile, OutsideWorkDirException
 
 
 def read_content(file_path: str) -> str:
@@ -62,41 +61,3 @@ def resolve_file_path(
 def create_directory_if_missing(file_path: str) -> None:
     dir_path = os.path.dirname(file_path)
     os.makedirs(dir_path, exist_ok=True)
-
-
-##################################################
-
-
-# To delete after refactoring
-def check_if_python_file(file_path: str) -> None:
-    if not file_path.endswith(".py"):
-        raise NotAPythonFile
-
-
-def check_file_existence(file_path: str) -> None:
-    if not os.path.exists(file_path) or not os.path.isfile(file_path):
-        raise FileNotFoundError
-
-
-def check_file_within_directory(
-    file_path: str, working_directory: str
-) -> None:
-    if not file_path.startswith(os.path.abspath(working_directory)):
-        raise OutsideWorkDirException
-
-
-def verify_filepath_is_valid_and_exists(
-    working_directory: str, file_path: str
-) -> str:
-    valid_path = verify_filepath_is_valid(working_directory, file_path)
-    check_file_existence(valid_path)
-    return valid_path
-
-
-def verify_filepath_is_valid(working_directory: str, file_path: str) -> str:
-    absolute_filepath = os.path.abspath(
-        os.path.join(working_directory, file_path)
-    )
-    absolute_directory = os.path.abspath(working_directory)
-    check_file_within_directory(absolute_filepath, absolute_directory)
-    return absolute_filepath
