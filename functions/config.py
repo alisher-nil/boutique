@@ -1,1 +1,3 @@
 MAX_CHARS = 10000
+
+ERROR_TEMPLATE = "Error: {error}"
