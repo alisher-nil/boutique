@@ -27,6 +27,19 @@ def file_exists(target_path: str) -> str:
     return target_path
 
 
+def directory_exists(target_path: str) -> str:
+    """
+    Check if the target directory exists.
+    Raises:
+        FileNotFoundError: If the target directory does not exist.
+    """
+    if not os.path.exists(target_path):
+        raise FileNotFoundError("Directory does not exist")
+    if not os.path.isdir(target_path):
+        raise FileNotFoundError("Path is not a valid directory")
+    return target_path
+
+
 def file_is_python(file_path: str) -> str:
     """
     Check if the file is a Python file.
