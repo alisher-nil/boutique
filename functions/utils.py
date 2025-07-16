@@ -3,6 +3,29 @@ import os
 from functions.exceptions import NotAPythonFile, OutsideWorkDirException
 
 
+def resolve_file_path(
+    working_directory: str, relative_path: str | None
+) -> str:
+    """Resolve the absolute path based on the working directory and relative path.
+    If relative_path is None, it defaults to an empty string.
+    Args:
+        working_directory (str): The base directory to resolve the path against.
+        relative_path (str | None): The relative path to resolve.
+    Returns:
+        str: The absolute target path.
+    """
+    if relative_path is None:
+        relative_path = ""
+
+    absolute_file_path = os.path.abspath(
+        os.path.join(
+            working_directory,
+            relative_path,
+        )
+    )
+    return absolute_file_path
+
+
 def verify_filepath_is_valid_and_exists(
     working_directory: str, file_path: str
 ) -> str:
