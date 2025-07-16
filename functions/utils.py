@@ -4,7 +4,7 @@ from functools import partial
 from functions.config import FILE_INFO_TEMPLATE, MAX_CHARS
 
 
-def read_content(file_path: str) -> str:
+def read_file_content(file_path: str) -> str:
     with open(file_path, "r") as f:
         file_content = f.read(MAX_CHARS)
 

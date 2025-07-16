@@ -1,13 +1,13 @@
 from functions.config import ERROR_TEMPLATE
 from functions.exceptions import OutsideWorkDirException
-from functions.utils import read_content, resolve_file_path
+from functions.utils import read_file_content, resolve_file_path
 from functions.validators import file_exists, path_within_bounds
 
 
 def get_file_content(working_directory: str, file_path: str) -> str:
     try:
         resolved_file_path = validate_file_path(working_directory, file_path)
-        file_content = read_content(resolved_file_path)
+        file_content = read_file_content(resolved_file_path)
     except Exception as e:
         return ERROR_TEMPLATE.format(error=e)
 
