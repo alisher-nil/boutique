@@ -59,5 +59,12 @@ def resolve_file_path(
 
 
 def create_directory_if_missing(file_path: str) -> None:
+    """
+    Create the directory for the given file path if it does not exist.
+
+    Args:
+        file_path (str): The path of the file for which the directory
+        should be created.
+    """
     dir_path = os.path.dirname(file_path)
     os.makedirs(dir_path, exist_ok=True)
