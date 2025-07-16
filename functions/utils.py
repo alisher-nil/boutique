@@ -10,7 +10,7 @@ def read_file_content(file_path: str) -> str:
 
         # checking is there's anything left after the limit:
         content_partial = len(f.read(1)) == 1
-        # if so, we append a message about truncation to the end of the content
+        # if so, append a message about truncation to the end of the content
         if content_partial:
             truncation_message = (
                 f'[...File "{file_path}" truncated at {MAX_CHARS} characters]'
@@ -36,7 +36,7 @@ def extract_file_info(filename: str) -> str:
 
 def resolve_file_path(
     working_directory: str,
-    relative_path: str | None,
+    relative_path: str | None = None,
 ) -> str:
     """Resolve the absolute path based on the working directory and relative path.
     If relative_path is None, it defaults to an empty string.

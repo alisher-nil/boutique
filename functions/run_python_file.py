@@ -1,4 +1,6 @@
-from functions.config import ERROR_TEMPLATE
+import subprocess
+
+from functions.config import ERROR_TEMPLATE, SUBPROCESS_TIMEOUT
 from functions.exceptions import NotAPythonFile, OutsideWorkDirException
 from functions.utils import resolve_file_path
 from functions.validators import (
@@ -7,12 +9,37 @@ from functions.validators import (
     path_within_bounds,
 )
 
+STDOUT_TEMPLATE = "STDOUT: {stdout}"
+STDERR_TEMPLATE = "STDERR: {stderr}"
+
 
 def run_python_file(working_directory: str, file_path: str, args: list = []):
+    output = []
     try:
         full_file_path = validate_file_path(working_directory, file_path)
+        process = subprocess.run(
+            ["python", full_file_path] + args,
+            check=True,
+            cwd=working_directory,
+            timeout=SUBPROCESS_TIMEOUT,
+            capture_output=True,
+            text=True,
+        )
+        output.append(STDOUT_TEMPLATE.format(stdout=process.stdout))
+        if process.stderr:
+            output.append(STDERR_TEMPLATE.format(stderr=process.stderr))
+    except subprocess.CalledProcessError as e:
+        return f"Process exited with code {e.returncode}"
+    except subprocess.SubprocessError as e:
+        error_message = f"executing Python file: {e}"
+        return ERROR_TEMPLATE.format(error=error_message)
     except Exception as e:
-        return ERROR_TEMPLATE.format(error=str(e))
+        return ERROR_TEMPLATE.format(error=e)
+
+    if not output:
+        output = ["No output produced."]
+
+    return "\n".join(output)
 
 
 def validate_file_path(working_directory: str, file_path: str):
