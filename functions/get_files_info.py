@@ -1,3 +1,5 @@
+from google.genai import types
+
 from functions.exceptions import OutsideWorkDirException
 from functions.utils import (
     extract_file_info,
@@ -7,9 +9,8 @@ from functions.utils import (
 from functions.validators import directory_exists, path_within_bounds
 
 
-def get_files_info(
-    working_directory: str, directory: str | None = None
-) -> str:
+def get_files_info(directory: str = ".") -> str:
+    working_directory: str = "calculator"
     try:
         target_dir_path = validate_directory_path(working_directory, directory)
         absolute_file_paths = get_folder_content(target_dir_path)
@@ -21,10 +22,7 @@ def get_files_info(
     return "\n".join(collected_file_info)
 
 
-def validate_directory_path(
-    working_directory: str,
-    directory: str | None,
-) -> str:
+def validate_directory_path(working_directory: str, directory: str) -> str:
     target_dir_path = resolve_file_path(working_directory, directory)
     working_directory_path = resolve_file_path(working_directory)
     try:
@@ -39,3 +37,21 @@ def validate_directory_path(
         raise Exception(f'"{directory}" is not a directory')
 
     return target_dir_path
+
+
+schema_get_files_info = types.FunctionDeclaration(
+    name="get_files_info",
+    description="Lists files in the specified directory along with their "
+    "sizes, constrained to the working directory.",
+    parameters=types.Schema(
+        type=types.Type.OBJECT,
+        properties={
+            "directory": types.Schema(
+                type=types.Type.STRING,
+                description="The directory to list files from, relative to the "
+                "working directory. If not provided, lists files in the "
+                "working directory itself.",
+            ),
+        },
+    ),
+)
