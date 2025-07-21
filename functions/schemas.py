@@ -16,3 +16,10 @@ schema_get_files_info = types.FunctionDeclaration(
         },
     ),
 )
+
+# schema_get_file_content = types.FunctionDeclaration(
+#     name="get_file_content",
+#     description=
+# )
+# schema_run_python_file
+# schema_write_file

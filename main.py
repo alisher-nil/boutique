@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 from google import genai
 from google.genai import types
 
-from functions.get_files_info import schema_get_files_info
+from functions import available_functions
 
 load_dotenv()
 system_prompt = """
@@ -25,11 +25,6 @@ is automatically injected for security reasons.
 api_key: str | None = os.environ.get("GEMINI_API_KEY")
 model_name = "gemini-2.0-flash-001"
 client = genai.Client(api_key=api_key)
-available_functions = types.Tool(
-    function_declarations=[
-        schema_get_files_info,
-    ]
-)
 
 
 def main(prompt: str, verbose: bool):
@@ -43,6 +38,15 @@ def main(prompt: str, verbose: bool):
             tools=[available_functions], system_instruction=system_prompt
         ),
     )
+
+    if verbose:
+        print(f"User prompt: {prompt}")
+        print(f"Prompt tokens: {response.usage_metadata.prompt_token_count}")
+        print(
+            "Response tokens: "
+            f"{response.usage_metadata.candidates_token_count}"
+        )
+
     if response.function_calls:
         for function_call_part in response.function_calls:
             print(
@@ -51,15 +55,6 @@ def main(prompt: str, verbose: bool):
             )
     else:
         print(response.text)
-
-    if verbose:
-        print(f"User prompt: {prompt}")
-
-        print(f"Prompt tokens: {response.usage_metadata.prompt_token_count}")
-        print(
-            "Response tokens: "
-            f"{response.usage_metadata.candidates_token_count}"
-        )
 
 
 if __name__ == "__main__":
