@@ -5,16 +5,18 @@ from functions.write_file import write_file
 
 
 def test_functions() -> None:
-    print(f"Result for current directory: \n{get_files_info(directory='.')}")
-    # print(
-    #     f"Result for 'pkg' directory: \n{get_files_info('calculator', 'pkg')}"
-    # )
-    # print(
-    #     f"Result for '/bin' directory: \n{get_files_info('calculator', '/bin')}"
-    # )
-    # print(
-    #     f"Result for '../' directory: \n{get_files_info('calculator', '../')}"
-    # )
+    print(
+        f"Result for current directory: \n{get_files_info('calculator', directory='.')}"
+    )
+    print(
+        f"Result for 'pkg' directory: \n{get_files_info('calculator', 'pkg')}"
+    )
+    print(
+        f"Result for '/bin' directory: \n{get_files_info('calculator', '/bin')}"
+    )
+    print(
+        f"Result for '../' directory: \n{get_files_info('calculator', '../')}"
+    )
 
 
 def test_content() -> None:
@@ -51,6 +53,6 @@ def test_execution():
 
 if __name__ == "__main__":
     # test_content()
-    test_functions()
-    # test_write_content()
+    # test_functions()
+    test_write_content()
     # test_execution()

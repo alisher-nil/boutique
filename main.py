@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 from google import genai
 from google.genai import types
 
-from functions import available_functions
+from functions import available_functions, call_function
 from prompts import system_prompt
 
 load_dotenv()
@@ -37,10 +37,11 @@ def main(prompt: str, verbose: bool):
 
     if response.function_calls:
         for function_call_part in response.function_calls:
-            print(
-                f"Calling function: {function_call_part.name}"
-                f"({function_call_part.args})"
-            )
+            result = call_function(function_call_part, verbose)
+            if result.parts and result.parts[0].function_response.response:
+                print(f"-> {result.parts[0].function_response.response}")
+            else:
+                raise Exception("Fatal error: nothing returned from func call")
     else:
         print(response.text)
 

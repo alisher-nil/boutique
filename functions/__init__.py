@@ -1,5 +1,6 @@
 from google.genai import types
 
+from .call_function import call_function
 from .schemas import (
     schema_get_file_content,
     schema_get_files_info,

@@ -7,7 +7,7 @@ from functions.utils import (
 from functions.validators import directory_exists, path_within_bounds
 
 
-def get_files_info(working_directory, directory: str = ".") -> str:
+def get_files_info(working_directory: str, directory: str = ".") -> str:
     try:
         target_dir_path = validate_directory_path(working_directory, directory)
         absolute_file_paths = get_folder_content(target_dir_path)
