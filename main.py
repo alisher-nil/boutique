@@ -41,10 +41,10 @@ def main(prompt: str, verbose: bool):
 
     if verbose:
         print(f"User prompt: {prompt}")
-        print(f"Prompt tokens: {response.usage_metadata.prompt_token_count}")
+        print(f"Prompt tokens: {response.usage_metadata.prompt_token_count}")  # ty: ignore[possibly-unbound-attribute]
         print(
             "Response tokens: "
-            f"{response.usage_metadata.candidates_token_count}"
+            f"{response.usage_metadata.candidates_token_count}"  # ty: ignore[possibly-unbound-attribute]
         )
 
     if response.function_calls:
