@@ -1,5 +1,3 @@
-from google.genai import types
-
 from functions.exceptions import OutsideWorkDirException
 from functions.utils import (
     extract_file_info,
@@ -37,21 +35,3 @@ def validate_directory_path(working_directory: str, directory: str) -> str:
         raise Exception(f'"{directory}" is not a directory')
 
     return target_dir_path
-
-
-schema_get_files_info = types.FunctionDeclaration(
-    name="get_files_info",
-    description="Lists files in the specified directory along with their "
-    "sizes, constrained to the working directory.",
-    parameters=types.Schema(
-        type=types.Type.OBJECT,
-        properties={
-            "directory": types.Schema(
-                type=types.Type.STRING,
-                description="The directory to list files from, relative to the "
-                "working directory. If not provided, lists files in the "
-                "working directory itself.",
-            ),
-        },
-    ),
-)
