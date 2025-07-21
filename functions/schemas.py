@@ -32,6 +32,7 @@ schema_get_file_content = types.FunctionDeclaration(
         },
     ),
 )
+
 schema_run_python_file = types.FunctionDeclaration(
     name="run_python_file",
     description="Runs the python file. Execution is aborted if the program "
@@ -41,10 +42,27 @@ schema_run_python_file = types.FunctionDeclaration(
         properties={
             "file_path": types.Schema(
                 type=types.Type.STRING,
-                description="Path to the file to run from, relative to the "
+                description="Path to the file to run, relative to the "
                 "working directory",
-            )
+            ),
         },
     ),
 )
-# schema_write_file
+schema_write_file = types.FunctionDeclaration(
+    name="write_file",
+    description="writes content to a target file",
+    parameters=types.Schema(
+        type=types.Type.OBJECT,
+        properties={
+            "file_path": types.Schema(
+                type=types.Type.STRING,
+                description="Path to the file to run, relative to the "
+                "working directory",
+            ),
+            "content": types.Schema(
+                type=types.Type.STRING,
+                description="Content that will be written to the target file.",
+            ),
+        },
+    ),
+)
