@@ -15,9 +15,13 @@ model_name = "gemini-2.0-flash-001"
 client = genai.Client(api_key=api_key)
 
 
-def main(prompt: str, verbose: bool):
+def main(prompt: str, verbose: bool = False):
     if not prompt:
         return
+
+    while True:
+        break
+
     messages = [types.Content(role="user", parts=[types.Part(text=prompt)])]
     response = client.models.generate_content(
         model=model_name,
@@ -26,6 +30,10 @@ def main(prompt: str, verbose: bool):
             tools=[available_functions], system_instruction=system_prompt
         ),
     )
+
+    if response.candidates:
+        for candidate in response.candidates:
+            messages.append(candidate.content)
 
     if verbose:
         print(f"User prompt: {prompt}")
