@@ -42,8 +42,7 @@ schema_run_python_file = types.FunctionDeclaration(
         properties={
             "file_path": types.Schema(
                 type=types.Type.STRING,
-                description="Path to the file to run, relative to the "
-                "working directory",
+                description="Path to the file to run, relative to the working directory",
             ),
         },
     ),
@@ -56,8 +55,7 @@ schema_write_file = types.FunctionDeclaration(
         properties={
             "file_path": types.Schema(
                 type=types.Type.STRING,
-                description="Path to the file to run, relative to the "
-                "working directory",
+                description="Path to the file to run, relative to the working directory",
             ),
             "content": types.Schema(
                 type=types.Type.STRING,
