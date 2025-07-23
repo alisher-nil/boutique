@@ -22,7 +22,9 @@ def main(prompt: str, verbose: bool = False):
     while True:
         break
 
-    messages = [types.Content(role="user", parts=[types.Part(text=prompt)])]
+    messages: list[types.Content] = [
+        types.Content(role="user", parts=[types.Part(text=prompt)])
+    ]
     response = client.models.generate_content(
         model=model_name,
         contents=messages,
@@ -46,6 +48,7 @@ def main(prompt: str, verbose: bool = False):
     if response.function_calls:
         for function_call_part in response.function_calls:
             result = call_function(function_call_part, verbose)
+            messages.append(result)
             if result.parts and result.parts[0].function_response.response:
                 print(f"-> {result.parts[0].function_response.response}")
             else:
