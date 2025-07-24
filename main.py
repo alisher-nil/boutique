@@ -3,7 +3,7 @@ import sys
 
 from dotenv import load_dotenv
 from google.genai import Client
-from google.genai.types import Candidate, Content, GenerateContentConfig, Part
+from google.genai.types import Content, GenerateContentConfig, Part
 
 from functions import available_functions, call_function
 from prompts import system_prompt
