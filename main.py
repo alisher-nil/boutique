@@ -10,6 +10,7 @@ from prompts import system_prompt
 
 load_dotenv()
 
+
 api_key: str | None = os.environ.get("GEMINI_API_KEY")
 client = Client(api_key=api_key)
 model_name = "gemini-2.0-flash-001"
