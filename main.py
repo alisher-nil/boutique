@@ -18,7 +18,6 @@ model_name = "gemini-2.0-flash-001"
 
 def main():
     prompt, verbose = parse_args()
-
     agent_run(prompt, verbose)
 
 
